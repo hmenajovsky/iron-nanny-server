@@ -62,3 +62,5 @@ typings/
 
 # for dev purpose
 package-lock.json
+
+.env
