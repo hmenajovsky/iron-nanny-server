@@ -31,7 +31,7 @@ router.post("/signup", uploader.single("picture"), async (req, res, next) => {
 
   // if (req.file) req.body.picture = req.file.path;
 
-  if (email === "" || name === "" || password === "" || age === "" || address === "" || phone === "") {
+  if (email === "" || name === "" || password === "") {
     res
       .status(400)
       .json({ message: "I need some informations to work with here!" });
