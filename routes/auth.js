@@ -26,11 +26,10 @@ router.post("/signup", uploader.single("picture"), async (req, res, next) => {
     availability,
     kidsNumber,
     kidsAge,
-    role,
-    picture
+    role
   } = req.body;
 
-  if (req.file) req.body.picture = req.file.path;
+  // if (req.file) req.body.picture = req.file.path;
 
   if (email === "" || name === "" || password === "") {
     res
@@ -76,7 +75,7 @@ router.post("/signup", uploader.single("picture"), async (req, res, next) => {
       kidsNumber,
       kidsAge,
       role,
-      picture
+      picture: req.file?.path
     });
 
     const user = createdUser.toObject();
