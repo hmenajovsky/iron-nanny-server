@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const endpoint = process.env.MONGO_URI || "mongodb://localhost/fullstack-app";
+const endpoint = process.env.MONGO_URI || "mongodb://localhost/iron-nanny";
 
 mongoose
   .connect(endpoint)
