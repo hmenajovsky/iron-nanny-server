@@ -65,7 +65,7 @@ const users = [
       "https://res.cloudinary.com/dgblvjmrn/image/upload/v1642427168/84_zstpqh.jpg",
     experience: 2,
     resume: "I love children, i used to take care of my brothers and sisters",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: " Sophie Durand ",
@@ -127,7 +127,7 @@ const users = [
     experience: 2,
     resume:
       "Since 2 i am taking care of 2 chidren for helping them homework, i am studing beside",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: "Anna Brown",
@@ -175,7 +175,7 @@ const users = [
     kidsAge: [5],
     description:
       "Pierre is full of energy, he likes reading and playing football",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: "Sarah Robert",
@@ -192,7 +192,7 @@ const users = [
     kidsAge: [5, 7],
     description:
       "Clara and Peter loves playing together. Clara play piano and Peter play tennis",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: "Jennifer Stone",
@@ -224,7 +224,7 @@ const users = [
     numberOfKids: 2,
     kidsAge: [7, 4],
     description: "As we finish late with help for our children homework",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: "Sharon Finch",
@@ -256,7 +256,7 @@ const users = [
     numberOfKids: 1,
     kidsAge: [6],
     description: "Antoine is allergic to milk",
-    availability: "afterSchool",
+    availability: "afterschool",
   },
   {
     name: "Evelyn Deluca",
