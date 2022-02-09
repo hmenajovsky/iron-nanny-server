@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
-const MatchSchema = new Schema({
-  nanny: {
+const likeSchema = new Schema({
+  liker: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  family: {
+  liked: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
 });
 
-module.exports = model("Match", MatchSchema);
+module.exports = model("Like", likeSchema);
