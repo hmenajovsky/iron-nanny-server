@@ -7,30 +7,6 @@ const Match = require("../models/Match.model");
 
 //router.use(protectRoute);
 
-router.get("/list", isAuthenticated, async (req, res, next) => {
-  try {
-    const likerId = req.payload._id;
-    const likedId = req.params.likedId;
-
-    let nannyId;
-    let familyId;
-    if (req.payload.role[0] === "nanny") {
-      nannyId = likerId;
-      familyId = likedId;
-    } else if (req.payload.role[0] === "family") {
-      nannyId = likedId;
-      familyId = likerId;
-    }
-    const Like = await Matched.find({
-      nanny: nannyId,
-      family: familyId,
-    }).populate("liker liked");
-    res.status(201).json({ Like });
-  } catch (error) {
-    console.error(error);
-  }
-});
-
 /*router.get("/:likedId([a-f0-9]{24})", isAuthenticated, async (req, res, next) => { 
     try {
         const likerId = req.payload._id; 
@@ -62,7 +38,7 @@ router.get("/list", isAuthenticated, async (req, res, next) => {
       }
     });*/
 
-router.post("/:otherId", isAuthenticated, async (req, res, next) => {
+router.post("/:likedId", isAuthenticated, async (req, res, next) => {
   console.log(req.payload);
   try {
     const likerId = req.payload._id; // current user id
@@ -91,27 +67,23 @@ router.post("/:otherId", isAuthenticated, async (req, res, next) => {
           family: familyId,
         });
         console.log("A new like has been added to the Like collection");
-        res
-          .status(200)
-          .json({
-            ...newMatch,
-            liked: false,
-            matched: true,
-            matchMessage: "It is a match! ",
-          });
+        res.status(200).json({
+          ...newMatch,
+          liked: false,
+          matched: true,
+          matchMessage: "It is a match! ",
+        });
       } catch (error) {
         console.error(error);
       }
     } else {
       console.log("No match has been found");
-      res
-        .status(200)
-        .json({
-          ...newLike,
-          matched: false,
-          liked: true,
-          likeMessage: "liked",
-        });
+      res.status(200).json({
+        ...newLike,
+        matched: false,
+        liked: true,
+        likeMessage: "liked",
+      });
     }
   } catch (error) {
     console.error(error);
