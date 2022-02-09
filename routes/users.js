@@ -31,6 +31,17 @@ router.patch("/:id", uploader.single("picture"), async (req, res, next) => {
     }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  console.log("req, params", req.params);
+  try {
+    const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+    console.log(deletedUser);
+    res.status(204).json(deletedUser);
+  } catch (err) {
+    next(err);
+  }
+});
+
 // TO FETCH AVAILABILITIES
 router.get("/availabilities", async (req, res, next) => {
     try {
@@ -42,15 +53,13 @@ router.get("/availabilities", async (req, res, next) => {
     }
 })
 
-router.delete("/:id", async (req, res, next) => {
-  console.log("req, params", req.params);
-  try {
-    const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
-    console.log(deletedUser);
-    res.status(204).json(deletedUser);
-  } catch (err) {
-    next(err);
-  }
-});
+// LIKES PERSISTENCY
+router.get("/availabilities", async (req, res, next) => {
+    try {
+
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
