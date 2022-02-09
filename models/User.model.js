@@ -15,7 +15,7 @@ const userSchema = new Schema(
     resume: String,
     description: String,
     availability: {
-      type: String,
+      type: [String],
       enum: ["fullTime", "partTime", "evening", "afterschool"]
     },
     kidsNumber: Number,
