@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const isAuthenticated = require("../middlewares/jwt.middleware");
 const User = require("../models/User.model");
 const saltRounds = 10;
-const uploader = require("./../config/cloudinary")
+const uploader = require("./../config/cloudinary.config")
 
 /**
  *
