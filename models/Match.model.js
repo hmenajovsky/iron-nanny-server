@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { model, Schema } = mongoose;
 
-const MatchSchema = new Schema({
+const matchSchema = new Schema({
   nanny: {
     type: Schema.Types.ObjectId,
     ref: "User",
@@ -12,4 +12,4 @@ const MatchSchema = new Schema({
   },
 });
 
-module.exports = model("Match", MatchSchema);
+module.exports = model("Match", matchSchema);
