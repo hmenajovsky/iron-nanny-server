@@ -1,9 +1,9 @@
 require("dotenv").config();
 require("../config/dbConfig"); // fetch the db connection
 const { SchemaTypeOptions } = require("mongoose");
-const UserModel = require("../models/Users.model.js"); // fetch the model to validate our user document before insertion (in database)
+const UserModel = require("../models/User.model.js");
 //const { getMaxListeners } = require("../app");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 
 const users = [
   {

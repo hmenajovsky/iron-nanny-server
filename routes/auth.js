@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const isAuthenticated = require("../middlewares/jwt.middleware");
 const User = require("../models/User.model");
 const saltRounds = 10;
-const uploader = require("./../config/cloudinary.config")
+const uploader = require("../config/cloudinary.config")
 
 /**
  *
@@ -14,7 +14,8 @@ const uploader = require("./../config/cloudinary.config")
  */
 
 router.post("/signup", uploader.single("picture"), async (req, res, next) => {
-  const { name,
+  const {
+    name,
     age,
     email,
     password,
@@ -26,7 +27,7 @@ router.post("/signup", uploader.single("picture"), async (req, res, next) => {
     availability,
     kidsNumber,
     kidsAge,
-    role
+    role,
   } = req.body;
 
   // if (req.file) req.body.picture = req.file.path;
@@ -75,7 +76,7 @@ router.post("/signup", uploader.single("picture"), async (req, res, next) => {
       kidsNumber,
       kidsAge,
       role,
-      picture: req.file?.path
+      picture: req.file?.path,
     });
 
     const user = createdUser.toObject();
