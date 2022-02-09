@@ -1,9 +1,9 @@
 const router = require("express").Router();
-const Likes = require("../models/Like.model");
+const Like = require("../models/Like.model");
 const mongoose = require("mongoose");
 const protectRoute = require("../middlewares/protectRoute");
 const isAuthenticated = require("../middlewares/jwt.middleware");
-const Matches = require("../models/Match.model");
+const Match = require("../models/Match.model");
 
 //router.use(protectRoute);
 
@@ -42,7 +42,7 @@ router.get(
   }
 );
 
-router.post("/:otherId", isAuthenticated, async (req, res, next) => {
+/*router.post("/:otherId", isAuthenticated, async (req, res, next) => {
   console.log(req.payload);
   try {
     const currentId = req.payload._id;
@@ -80,12 +80,16 @@ router.post("/:otherId", isAuthenticated, async (req, res, next) => {
   } catch (error) {
     console.error(error);
   }
-});
+});*/
 
 router.get("/matchList", isAuthenticated, async (req, res, next) => {
   try {
     const userId = req.payload._id;
-    const matchResult = await Likes.find();
+    const findMatchList = await Match.find({ nanny: 1 }).populate(
+      "nanny family"
+    );
+    console.log("findMatchList", findMatchList);
+    res.status(200).json(findMatchList);
   } catch (e) {
     next(e);
   }
