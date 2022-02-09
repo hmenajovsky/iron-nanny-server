@@ -1,57 +1,101 @@
 const router = require("express").Router();
-const Matches = require("../models/Match.model");
+const Like = require("../models/Like.model");
+const Match = require("../models/Match.model");
 const mongoose = require("mongoose");
 const protectRoute = require("../middlewares/protectRoute");
 const isAuthenticated = require("../middlewares/jwt.middleware");
 
 //router.use(protectRoute);
 
-router.get("/list", async (req, res, next) => { 
+router.get("/list", isAuthenticated, async (req, res, next) => { 
   try {
-    const matches = await Matches.find({liker :req.session.currentUser._id}).populate("liker liked");
-    res.json({
-      matches: matches,
-    });
+    const likerId = req.payload._id; 
+    const likedId = req.params.likedId;
+
+    let nannyId;
+    let familyId;
+    if (req.payload.role[0] ==="nanny") {
+      nannyId = likerId;
+      familyId = likedId;
+    } else if (req.payload.role[0] ==="family") {
+      nannyId = likedId;
+      familyId = likerId
+    }
+    const Like = await Matched.find({ nanny: nannyId, family: familyId }).populate("liker liked");
+    res.status(201).json({Like});
   } catch (error) {
     console.error(error);
   }
 });
 
-router.get("/:likedId([a-f0-9]{24})", isAuthenticated, async (req, res, next) => { 
+/*router.get("/:likedId([a-f0-9]{24})", isAuthenticated, async (req, res, next) => { 
     try {
-        const likerId = req.payload.currentUser._id;
-        console.log(likerId);
+        const likerId = req.payload._id; 
         const likedId = req.params.likedId;
-        const match = await Matches.findOne({ liked: likerId, liker: likedId });
-        console.log("match >>", match);
-        console.log("match type >>", typeof match);
-          const matched = await Matches.findById(newLike._id).populate(
-            "liker liked"
+
+        let nannyId;
+        let familyId;
+        if (req.payload.role[0] ==="nanny") {
+          nannyId = likerId;
+          familyId = likedId;
+        } else if (req.payload.role[0] ==="family") {
+          nannyId = likedId;
+          familyId = likerId;      
+       }
+       console.log("nanny & family", nannyId, familyId)
+
+        const matched = await Matched.findOne({ nanny: nannyId, family:familyId })
+          .populate(
+            "nanny family"
           );
-          console.log("newLike.liker après populate >>", matched.liked);
-          res.json({
-            matched,
-          });
+          console.log("matched >>", matched);
+          if (matched !== null) {
+          res.status(201).json({matched});
+          } else if (matched === null) {
+            console.log("no match");
+          }
       } catch (error) {
         console.error(error);
       }
-    });
+    });*/
     
 
 router.post("/:likedId", isAuthenticated, async (req, res, next) => {
   console.log(req.payload);
   try {
-    const likerId = req.payload._id;
-    console.log(likerId);
-    const likedId = req.params.likedId;
-    const newLike = await Matches.create({ liker: likerId, liked: likedId });
-    console.log("newLike avant match et populate >>", newLike);
-    const match = await Matches.findOne({ liked: likerId, liker: likedId });
-    if (match !== null) {
-    console.log("there is a match >>", match);
-    console.log("match type >>", typeof match);
+    const likerId = req.payload._id; // current user id
+    const likedId = req.params.likedId; // other user id 
+    const newLike = await Like.create({ liker: likerId, liked: likedId });
+    console.log("A new like has been added to the Like collection");
+
+    const foundLike = await Like.findOne({ liked: likerId, liker: likedId });
+  
+
+    if (foundLike !== null) {
+
+    console.log("a matching like has been found !");
+    //create into match collection
+    let nannyId;
+    let familyId;
+    if (req.payload.role[0] ==="nanny") {
+      nannyId = likerId;
+      familyId = likedId;
+    } else if (req.payload.role[0] ==="family") {
+      nannyId = likedId;
+      familyId = likerId;
+    }
+    console.log(nannyId);
+      try {
+       const newMatch = await Match.create({ nanny: nannyId, family: familyId });
+        console.log("A new like has been added to the Like collection");
+        res.status(200).json({...newMatch, liked: false, matched: true, matchMessage: "It is a match! "});
+      }
+      catch(error) {
+        console.error(error);
+      }
     } else {
-      console.log("there is no match >>", match);
+      console.log("No match has been found");
+      res.status(200).json({...newLike, matched: false, liked: true, likeMessage: "liked"});
     }
     } catch (error) {
     console.error(error);
